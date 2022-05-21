@@ -37,7 +37,7 @@ abi= compiled_sol["contracts"]["simpleStorage.sol"]["SimpleStorage"]["abi"]
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 chain_id = 1337
 my_address = "0x0b09b007968b701e51C17b51BD587aae94bB4e36"
-private_key = "50d9b4e3f2ef00e0c03ac0e48774ccc8ad77a97fc58f815786b1b3131f6e7f29"
+private_key = ""
 
 #creating the contract in Python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
@@ -60,3 +60,17 @@ tx_hash= w3.eth.send_raw_transaction(signed_txn.rawTransaction)
 tx_receipt= w3.eth.wait_for_transaction_receipt(tx_hash)
 
 #To interact with a Contract we need Contract Address and Contract ABI
+simple_storage= w3.eth.contract(address=tx_receipt.contractAddress, abi=abi)
+print(simple_storage.functions.retrieveNo().call())
+store_transaction= simple_storage.functions.storeNumber(15).buildTransaction(
+    {
+        "chainId": chain_id,
+        "gasPrice": w3.eth.gas_price,
+        "from": my_address,
+        "nonce": nonce + 1,
+    }
+)
+signed_store_txn= w3.eth.account.sign_transaction(store_transaction, private_key=private_key)
+send_store_tx= w3.eth.send_raw_transaction(signed_store_txn.rawTransaction)
+tx_receipt= w3.eth.wait_for_transaction_receipt(send_store_tx)
+print(simple_storage.functions.retrieveNo().call())
