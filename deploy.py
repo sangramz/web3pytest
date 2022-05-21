@@ -36,8 +36,8 @@ abi= compiled_sol["contracts"]["simpleStorage.sol"]["SimpleStorage"]["abi"]
 #connecting to Ganache
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 chain_id = 1337
-my_address = "0xc352Bfb826c58e1b0e5535B283152aA288576D62"
-private_key = os.getenv(PRIVATE_KEY)
+my_address = "0x0b09b007968b701e51C17b51BD587aae94bB4e36"
+private_key = "50d9b4e3f2ef00e0c03ac0e48774ccc8ad77a97fc58f815786b1b3131f6e7f29"
 
 #creating the contract in Python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
@@ -57,3 +57,6 @@ transaction = SimpleStorage.constructor().buildTransaction(
 signed_txn= w3.eth.account.sign_transaction(transaction, private_key=private_key)
 #Send this Transaction
 tx_hash= w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+tx_receipt= w3.eth.wait_for_transaction_receipt(tx_hash)
+
+#To interact with a Contract we need Contract Address and Contract ABI
