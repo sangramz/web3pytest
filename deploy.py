@@ -37,7 +37,7 @@ abi= compiled_sol["contracts"]["simpleStorage.sol"]["SimpleStorage"]["abi"]
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 chain_id = 1337
 my_address = "0x0b09b007968b701e51C17b51BD587aae94bB4e36"
-private_key = ""
+private_key = "50d9b4e3f2ef00e0c03ac0e48774ccc8ad77a97fc58f815786b1b3131f6e7f29"
 
 #creating the contract in Python
 SimpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
